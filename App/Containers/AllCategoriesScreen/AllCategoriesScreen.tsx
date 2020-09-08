@@ -65,7 +65,6 @@ class AllCategoriesScreen extends React.Component<Props>{
         )
     };
     public playSong = (songData: any) => {
-        console.log("songData ========>>>.", songData)
         if (this.categoryData.title === DataTypes.VIDEOS) {
             RNTrackPlayer.pause();
             this.props.playSong(songData)

@@ -41,14 +41,7 @@ export default class PushNotifContainer extends Component {
     this.registerAppWithFCM()
     const fcmToken = await firebase.messaging().getToken();
     if (fcmToken) {
-      // alert(fcmToken)
-      console.log("==================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", fcmToken)
-      // user has a device token
-
     } else {
-      // user doesn't have a device token yet
-      // alert(fcmToken)
-
     }
     firebase.notifications().onNotification((notification) => {
       console.log(notification)
@@ -62,8 +55,6 @@ export default class PushNotifContainer extends Component {
   registerAppWithFCM() {
     firebase.messaging().requestPermission()
       .then(() => {
-        // User has authorised  
-        console.log("================?????????????????????=====grandted")
       })
       .catch(error => {
         // User has rejected permissions  

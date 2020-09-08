@@ -69,7 +69,6 @@ class EmailLogin extends React.Component<Props, State> {
       requestedOperation: AppleAuthRequestOperation.LOGIN,
       requestedScopes: [AppleAuthRequestScope.EMAIL, AppleAuthRequestScope.FULL_NAME],
     });
-    console.log("user ==========>>>>>>>>>>>>>>>>>>>>>>>>.", user)
     if (user.user) {
       let userDataFb = {
         userName: `${user.fullName?.givenName} ${user.fullName?.familyName}`,
@@ -98,7 +97,6 @@ class EmailLogin extends React.Component<Props, State> {
   // }
   public login = async () => {
     let deviceId = DeviceInfo.getUniqueId()
-    console.log("Device Id =============================>>>>>>>>>>>>>>>>>>>>>>>>", deviceId)
     //   console.log(this.state.email, this.state.password);
     this.props.login(this.state.email, this.state.password, "normal", deviceId);
     //   this.props.navigation.navigate("HomeScreen");

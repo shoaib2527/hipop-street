@@ -12,7 +12,7 @@ import {
   ActivityIndicator,
   Platform,
   RefreshControl,
-  KeyboardAvoidingView,
+  Linking,
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -106,7 +106,7 @@ class HomeScreen extends React.Component<Props, State> {
       showCross: false
     };
   }
-  public componentDidMount() {
+  componentDidMount() {
     this.props.setBottomTab(BottomBarBtns.EXPLORE);
     this.props.getCategories();
     this.props.getHomeData();
@@ -117,6 +117,14 @@ class HomeScreen extends React.Component<Props, State> {
         // Unable to show interstitial - not loaded yet.
       }
     }, 5000);
+    console.warn("==========================================================")
+    Linking.addEventListener('url', this.handleOpenURL)
+  }
+  componentWillUnmount() { // C
+    Linking.removeEventListener('url', this.handleOpenURL);
+  }
+  handleOpenURL = (event) => { // D
+    console.log("Event==>", event);
   }
   public selectSingleCategory = (data: any) => {
     this.props.navigation.navigate('Playlist', {

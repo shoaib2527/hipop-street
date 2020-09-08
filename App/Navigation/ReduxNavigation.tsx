@@ -38,19 +38,15 @@ class ReduxNavigation extends React.Component<Props> {
   // });
   public componentDidMount() {
     setKey("AIzaSyCDJLIQ-qeKlvUDfxokL2W4OCIfmD77pM0");
-    // this.props.checkLogin();
-    this.props.checkUserRole(() => Alert.alert("Error", "no user role"));
-    Linking.addEventListener('url', this.handleOpenURL);
-    // if (Platform.OS === 'android') {
-    Linking.getInitialURL().then(url => {
-      this.navigate(url);
-    });
-    // dynamicLinks.dynamicLinks().getInitialLink().then((url) => this.navigate(url));
-    // dynamicLinks.dynamicLinks().onLink((url)=>this.navigate())
-    // }
+    // this.props.checkUserRole(() => Alert.alert("Error", "no user role"));
+    // Linking.addEventListener('url', this.handleOpenURL);
+    // Linking.getInitialURL().then(url => {
+    //   console.log("URL =====>>>>>", url)
+    //   this.navigate(url);
+    // });
   }
   componentWillUnmount() { // C
-    Linking.removeEventListener('url', this.handleOpenURL);
+    // Linking.removeEventListener('url', this.handleOpenURL);
   }
   public handleOpenURL = (event) => { // D
     this.navigate(event.url);

@@ -192,8 +192,6 @@ class MusicPlayScreen extends React.Component<Props, State>{
         })
     }
     public openArtistProfile = (userId: string) => {
-        console.log("User ID =============>>>>>>>>>.", userId)
-        // console.log("currentSong =============>>>>>>>>>.", this.props.currentSong)
         this.props.getArtist(userId);
         this.props.navigation.push("ArtistProfileScreen")
     }
