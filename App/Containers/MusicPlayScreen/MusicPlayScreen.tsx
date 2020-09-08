@@ -2,7 +2,7 @@ import Slider from '@react-native-community/slider';
 import { Container, Icon, Toast } from "native-base";
 import React from "react";
 import {
-    Dimensions, Image, ScrollView, Text, TouchableOpacity, View, Platform, Alert, Clipboard,BackHandler
+    Dimensions, Image, ScrollView, Text, TouchableOpacity, View, Platform, Alert, Clipboard, BackHandler
 
 } from "react-native";
 import Share from "react-native-share";
@@ -132,7 +132,7 @@ class MusicPlayScreen extends React.Component<Props, State>{
             this.setState({ minutePassed: true })
         }, 60000);
         this.backListener = BackHandler.addEventListener("hardwareBackPress",
-        this.showAd);
+            this.showAd);
     }
     public componentWillUnmount() {
         clearInterval(this.interval);
