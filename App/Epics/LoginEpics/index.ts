@@ -52,14 +52,12 @@ export const loginRequestEpic: Epic = (action$, state$, { api }: IDependencies) 
   mergeMap((action) => {
     return api.hiphop.login(action.payload.email, action.payload.pwd, action.payload.socialType, action.payload.socialId, action.payload.deviceId).pipe(
       mergeMap(async (response: ApiResponse<any>) => {
-        console.log("response", response)
         if (response.ok && response.data.error === false) {
           if (response.data.object.user_cat !== "undefined") {
             // loginResponse = response.data.object;
             await storeLoginData(response.data.object);
 
           } else {
-            console.log("at no user cat");
             let userRole = "";
             const a = new Promise((resolve, reject) => {
               Alert.alert("Input", "Please provide your user role", [
@@ -163,7 +161,6 @@ export const logoutEpic: Epic = (action$, state$, { api }: IDependencies) => act
         try {
           await AsyncStorage.removeItem(LOGIN_KEY)
         } catch{
-          console.log("logout error")
         }
         RNTrackPlayer.destroy();
         RNTrackPlayer.pause();
@@ -188,7 +185,6 @@ export const socialLogout: Epic = (action$, state$, { api }: IDependencies) => a
         try {
           await AsyncStorage.removeItem(LOGIN_KEY)
         } catch{
-          console.log("logout error")
         }
       }
     } catch (e) {

@@ -5,7 +5,6 @@ import { UserRole } from "../Containers/SignupScreen/SignupScreen";
 export const transformSongArray = (songArray: Array<Songs>, userRole?: UserRole) => {
     if (songArray) {
         let newArray = songArray.map((item, index, array) => {
-            console.log(item.userid)
             // dont show unapproved song to normal users
             if (userRole) {
                 if (userRole === UserRole.NORMAL && item.status === "0") {
@@ -56,6 +55,5 @@ export const transformSongObject = (songObject: any) => {
 
 export const getPlayerState = async () => {
     const b = await RNTrackPlayer.getState();
-    console.log("player state", b);
     return b === 3 ? true : false;
 }

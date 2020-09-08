@@ -31,6 +31,9 @@ PODS:
     - FBSDKShareKit/Share (= 5.8.0)
   - FBSDKShareKit/Share (5.8.0):
     - FBSDKCoreKit (~> 5.0)
+  - Firebase/AdMob (6.13.0):
+    - Firebase/CoreOnly
+    - Google-Mobile-Ads-SDK (~> 7.50)
   - Firebase/Core (6.13.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 6.1.6)
@@ -90,6 +93,9 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - Google-Mobile-Ads-SDK (7.65.0):
+    - GoogleAppMeasurement (~> 6.0)
+    - GoogleUserMessagingPlatform (~> 1.1)
   - GoogleAppMeasurement (6.1.6):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
     - GoogleUtilities/MethodSwizzler (~> 6.0)
@@ -104,6 +110,7 @@ PODS:
     - AppAuth (~> 1.2)
     - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleUserMessagingPlatform (1.1.0)
   - GoogleUtilities/AppDelegateSwizzler (6.5.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -299,38 +306,38 @@ PODS:
     - React-cxxreact (= 0.61.0)
     - React-jsi (= 0.61.0)
   - React-jsinspector (0.61.0)
-  - react-native-document-picker (3.2.4):
+  - react-native-document-picker (3.3.3):
     - React
-  - react-native-fbsdk (1.1.1):
+  - react-native-fbsdk (1.1.2):
     - React
-    - react-native-fbsdk/Core (= 1.1.1)
-    - react-native-fbsdk/Login (= 1.1.1)
-    - react-native-fbsdk/Share (= 1.1.1)
-  - react-native-fbsdk/Core (1.1.1):
+    - react-native-fbsdk/Core (= 1.1.2)
+    - react-native-fbsdk/Login (= 1.1.2)
+    - react-native-fbsdk/Share (= 1.1.2)
+  - react-native-fbsdk/Core (1.1.2):
     - FBSDKCoreKit (= 5.8)
     - React
-  - react-native-fbsdk/Login (1.1.1):
+  - react-native-fbsdk/Login (1.1.2):
     - FBSDKLoginKit (= 5.8)
     - React
-  - react-native-fbsdk/Share (1.1.1):
+  - react-native-fbsdk/Share (1.1.2):
     - FBSDKShareKit (= 5.8)
     - React
-  - react-native-image-picker (2.0.0):
+  - react-native-image-picker (2.3.1):
     - React
   - react-native-safe-area-context (1.0.2):
     - React
-  - react-native-slider (2.0.8):
+  - react-native-slider (2.0.9):
     - React
   - react-native-splash-screen (3.2.0):
     - React
-  - react-native-track-player (2.0.0-rc13):
+  - react-native-track-player (2.0.0-rc9):
     - React
   - react-native-video (5.0.2):
     - React
     - react-native-video/Video (= 5.0.2)
   - react-native-video/Video (5.0.2):
     - React
-  - react-native-webview (8.1.2):
+  - react-native-webview (8.2.1):
     - React
   - React-RCTActionSheet (0.61.0):
     - React-Core/RCTActionSheetHeaders (= 0.61.0)
@@ -367,15 +374,15 @@ PODS:
     - React-cxxreact (= 0.61.0)
     - React-jsi (= 0.61.0)
     - ReactCommon/jscallinvoker (= 0.61.0)
-  - RNAppleAuthentication (1.1.1):
+  - RNAppleAuthentication (1.1.2):
     - React
-  - RNCAsyncStorage (1.7.1):
+  - RNCAsyncStorage (1.9.0):
     - React
   - RNCClipboard (1.2.2):
     - React
-  - RNDateTimePicker (2.3.0):
+  - RNDateTimePicker (2.3.2):
     - React
-  - RNDeviceInfo (5.6.1):
+  - RNDeviceInfo (5.6.5):
     - React
   - RNFirebase (5.6.0):
     - Firebase/Core
@@ -388,16 +395,16 @@ PODS:
     - React
   - RNFS (2.16.6):
     - React
-  - RNGestureHandler (1.5.2):
+  - RNGestureHandler (1.6.1):
     - React
   - RNGoogleSignin (3.0.4):
     - GoogleSignIn (~> 5.0.0)
     - React
-  - RNScreens (2.9.0):
+  - RNScreens (2.8.0):
     - React
-  - RNShare (3.0.0):
+  - RNShare (3.2.0):
     - React
-  - RNSoundPlayer (0.10.3):
+  - RNSoundPlayer (0.10.4):
     - React
   - RNVectorIcons (6.6.0):
     - React
@@ -407,6 +414,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
+  - Firebase/AdMob (~> 6.13.0)
   - Firebase/Core (~> 6.13.0)
   - Firebase/DynamicLinks (~> 6.13.0)
   - Firebase/Messaging (~> 6.13.0)
@@ -476,10 +484,12 @@ SPEC REPOS:
     - FirebaseDynamicLinks
     - FirebaseInstanceID
     - FirebaseMessaging
+    - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleSignIn
+    - GoogleUserMessagingPlatform
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
@@ -604,10 +614,12 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 089b7a4991425783384acc8bcefcd78c0af913bd
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
+  Google-Mobile-Ads-SDK: af735e001ee534d9dd2ce0a87cd8c355b19844b5
   GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
   GoogleDataTransport: 6ffa4dd0b6d547f8d27b91bd92fa9e197a3f5f1f
   GoogleDataTransportCCTSupport: 2d7e609f8c5af1a33d7d59053e6f8cba59365df5
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
+  GoogleUserMessagingPlatform: 9dc714d2e1f0aa727b9cc52d266dc1b155f4c3f2
   GoogleUtilities: ad0f3b691c67909d03a3327cc205222ab8f42e0e
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
@@ -622,15 +634,15 @@ SPEC CHECKSUMS:
   React-jsi: 4b5e521350c455b5eb4be50ea98c02de25b44fad
   React-jsiexecutor: 5532ab4389aabbbf1b87904de04c8ddd7dda7036
   React-jsinspector: 99b82aeb51d67d9025ab4eb8ccb8132f8dcebf69
-  react-native-document-picker: c36bf5f067a581657ecaf7124dcd921a8be19061
-  react-native-fbsdk: b94a83971c496a35803f38b921aec6d637ba07b5
-  react-native-image-picker: ba7fe85b3373ff33d4827210d989dfcbbd68f7f9
-  react-native-safe-area-context: 5292aacb304803e215ff13fd7f01c3577909319f
-  react-native-slider: b2f361499888302147205f17f6fffa921a7bda70
+  react-native-document-picker: dd96ce05bf1453b110d7a3912097bf6d298d2cb6
+  react-native-fbsdk: c35d42169e64aaf66f01713c1e18d0674f7f6519
+  react-native-image-picker: 6a850c41f57f0848d918c2a77aedd7aa272ffa30
+  react-native-safe-area-context: 9d9640a9085014864052e38496fc1dfde0b93974
+  react-native-slider: e51492f1264d882a8815b71c5870f8978e52887d
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
-  react-native-track-player: 6c2c2f163534bb6d6b5fea68959b3641f70718dd
-  react-native-video: 961749da457e73bf0b5565edfbaffc25abfb8974
-  react-native-webview: 055c7110f17c2f19c971f655064ee480638db668
+  react-native-track-player: 36e250a77705e5edc34b12020fd526511070971f
+  react-native-video: d01ed7ff1e38fa7dcc6c15c94cf505e661b7bfd0
+  react-native-webview: 160ac8d6bb974e2933f2de6bb7464a8e934ff31d
   React-RCTActionSheet: 5f9a1733ec8e380aae8a97877f1166cb058733ae
   React-RCTAnimation: 3e0a55305b70b1eb5a5e34230ed8198d4a782da9
   React-RCTBlob: a6ff2220ed7ef4b06e559ec61a0b0f4e80a3716a
@@ -641,21 +653,21 @@ SPEC CHECKSUMS:
   React-RCTText: beb19a6c50072a1a2f617490ea967237c98d1dfc
   React-RCTVibration: c8e67f140a83a14a1ad9042950cca08ab29423fd
   ReactCommon: 584ef683c340894c1c82be43ce760390493ae8bf
-  RNAppleAuthentication: 64a29b6d4c6435afa6341ab07c8b1ccf5ed68fef
-  RNCAsyncStorage: 8539fc80a0075fcc9c8e2dff84cd22dc5bf1dacf
-  RNCClipboard: a254f6e568bc713b7ef49646e216661369882030
-  RNDateTimePicker: d7d3dde9497b4bd4b3ea84881c41d3f0ece481f5
-  RNDeviceInfo: ab2ab4ca9e7f2bc4f35d62ab6ce2b66f2cbf1e7a
+  RNAppleAuthentication: 473b2c076f1a48a537610580a168c1fb6d0a90c6
+  RNCAsyncStorage: 453cd7c335ec9ba3b877e27d02238956b76f3268
+  RNCClipboard: 8148e21ac347c51fd6cd4b683389094c216bb543
+  RNDateTimePicker: 4bd49e09f91ca73d69119a9e1173b0d43b82f5e5
+  RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
   RNFirebase: 37daa9a346d070f9f6ee1f3b4aaf4c8e3b1d5d1c
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
-  RNGestureHandler: 946a7691e41df61e2c4b1884deab41a4cdc3afff
+  RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNGoogleSignin: a00f87261ea13df9a5cea8deafa6927d6f2c3562
-  RNScreens: c526239bbe0e957b988dacc8d75ac94ec9cb19da
-  RNShare: 0e19ddb0bf338b62702ce1d9e001ee14effa68a8
-  RNSoundPlayer: 36fe7b7390a62c81a7eb4deeca07420399699872
+  RNScreens: 62211832af51e0aebcf6e8c36bcf7dd65592f244
+  RNShare: 13f1b72aab353c3092b30dce99d212871bb2a8a1
+  RNSoundPlayer: b55bbb1b4cbf8b3f2c81db622d9db4b305407f5b
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: 3f70bbd9aa01e04eefec36e2a085b2fc0ff1dd98
 
-PODFILE CHECKSUM: 715e0e11ca8c0140028fb8ecfc7270eb375f4608
+PODFILE CHECKSUM: 2f342fae86966a1ec6cf95995dda4ca2ed504c28
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3

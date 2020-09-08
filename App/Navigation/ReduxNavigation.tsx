@@ -43,7 +43,6 @@ class ReduxNavigation extends React.Component<Props> {
     Linking.addEventListener('url', this.handleOpenURL);
     // if (Platform.OS === 'android') {
     Linking.getInitialURL().then(url => {
-      console.log("URL =====>>>>>", url)
       this.navigate(url);
     });
     // dynamicLinks.dynamicLinks().getInitialLink().then((url) => this.navigate(url));
@@ -59,7 +58,6 @@ class ReduxNavigation extends React.Component<Props> {
   public navigate = (url) => { // E
     if (url) {
       RNTrackPlayer.reset()
-      console.log(url, "at linking listener");
       let croppedShareUrl = "";
       let n = url.search("song");
       // console.log(n)
@@ -69,7 +67,6 @@ class ReduxNavigation extends React.Component<Props> {
       // console.log("replaced", `${croppedShareUrl}`.replace(/%26/g, "\",\"").replace(/%3D/g, "\":\"").replace(/%2F/g, "/").replace(/%3A/g, ":").replace(/%20/g, " "))
 
       let parsedUrl = JSON.parse(decodeURI('{"' + `${decodedShareUrl}`.replace(/%26/g, "\",\"").replace(/%3D/g, "\":\"").replace(/%2F/g, "/").replace(/%3A/g, ":").replace(/%20/g, " ") + '"}'));
-      console.log(parsedUrl, "at redux nav =>>>>>>>>>>>>>>>>>>>>");
       this.props.playSong(parsedUrl);
       this.props.shouldPlay(true);
       RNTrackPlayer.add(transformSongArray([parsedUrl]));
