@@ -17,7 +17,7 @@ export type Props = OwnProps;
 export default function CommonHeader(props: any) {
     // public render() {
     const insets = useSafeArea();
-    console.log("insets", insets)
+    // console.log("insets", insets)
     return (
         <Header noShadow={true} style={{ ...styles.header, marginTop: insets.top * -1, ...props.style }}>
             <View style={styles.leftStyle}>

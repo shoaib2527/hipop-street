@@ -1,7 +1,10 @@
 import Slider from '@react-native-community/slider';
 import { Container, Icon, Toast } from "native-base";
 import React from "react";
-import { Dimensions, Image, ScrollView, Text, TouchableOpacity, View, Platform, Alert, Clipboard } from "react-native";
+import {
+    Dimensions, Image, ScrollView, Text, TouchableOpacity, View, Platform, Alert, Clipboard,BackHandler
+
+} from "react-native";
 import Share from "react-native-share";
 import RNTrackPlayer, { Event, State } from "react-native-track-player";
 import Video from 'react-native-video';
@@ -18,9 +21,17 @@ import colors from "../../Themes/Colors";
 import { UserRole } from "../SignupScreen/SignupScreen";
 import styles from "./MusicPlayScreenStyles";
 import firebase from 'react-native-firebase';
+
 var shorthash = require("shorthash");
 var RNFS = require('react-native-fs');
 
+// import firebase from 'react-native-firebase';
+const advert = firebase.admob().interstitial(Platform.OS == 'ios' ?
+    'ca-app-pub-3940256099942544/4411468910'
+    : 'ca-app-pub-3940256099942544/1033173712');
+const AdRequest = firebase.admob.AdRequest;
+var request = new AdRequest();
+request.addKeyword('foo');
 export enum OpenSong {
     SCREEN = "From Screen",
     COMPONENT = "From Component",
@@ -43,6 +54,7 @@ export interface State {
     pauseVideo: boolean;
     songPausedAt: number;
     comingFrom: OpenSong;
+    isModalVisible: boolean;
 
 }
 export interface DispatchProps {
@@ -79,6 +91,7 @@ class MusicPlayScreen extends React.Component<Props, State>{
             pauseVideo: false,
             songPausedAt: 0,
             comingFrom: this.props.navigation.getParam("comingFrom"),
+            isModalVisible: false,
 
         }
     }
@@ -87,31 +100,54 @@ class MusicPlayScreen extends React.Component<Props, State>{
     public timer: any = null;
     public videoPlayer: any = null;
 
+    public showAd() {
+        console.log("show ad")
+        if (this.state.minutePassed) {
+            setTimeout(() => {
+                this.setState({ minutePassed: true })
+            }, 60000);
+            if (advert.isLoaded()) {
+                advert.show();
+                console.log("Ad shown")
+            } else {
+                advert.loadAd(request.build())
+                console.log("Unable to show interstitial - not loaded yet.")
+            }
+            this.setState({ minutePassed: false })
+        }
+    }
     public componentDidMount() {
         this.props.getFavorites(false);
-        // console.log(this.state.isSong, "song or video");
         setTimeout(() => this.getSongTotalTime(), 2000);
-        // this.getSongTotalTime();
         this.state.isSong && this.durationCounter();
-
+        advert.loadAd(request.build());
+        advert.on('onAdLoaded', () => {
+            console.log('Advert ready to show.');
+        });
+        advert.on('onAdClosed', () => {
+            console.log("Closed")
+            advert.loadAd(request.build())
+        });
+        setTimeout(() => {
+            this.setState({ minutePassed: true })
+        }, 60000);
+        this.backListener = BackHandler.addEventListener("hardwareBackPress",
+        this.showAd);
+    }
+    public componentWillUnmount() {
+        clearInterval(this.interval);
+        this.backListener.remove()
     }
     public getSongTotalTime = async () => {
-        // if (this.props.currentSong) {
         const songTotalTime = await RNTrackPlayer.getDuration();
-        // console.log("Track Duration =========>>>>>", songTotalTime)
         const totalTime = this.getMinsSec(songTotalTime);
         this.setState({ duration: { min: totalTime.minutes, sec: totalTime.seconds, total: songTotalTime }, })
-
-        // if (!songTotalTime) {
-        //     setTimeout(() => this.getSongTotalTime(), 2000);        }
-        // }
     }
     public getMinsSec = (time: number) => {
         // console.log(Math.floor(time / 60));
         return { minutes: Math.floor(time / 60), seconds: (time % 60).toFixed(0) }
     }
     public durationCounter = async () => {
-        console.log("Song File =====>>>>>>", this.props.currentSong.song_file)
         if (this.props.currentSong.song_file) {
             this.timer = setInterval(async () => {
                 const songCurrent = await RNTrackPlayer.getPosition();
@@ -130,11 +166,11 @@ class MusicPlayScreen extends React.Component<Props, State>{
             && this.state.isSong) {
             this.durationCounter();
             setTimeout(() => this.getSongTotalTime(), 2000);
-            console.log("did update working")
         };
 
     }
     public playSong = () => {
+        this.showAd();
         if (this.props.currentSong.song_file && this.state.isSong) {
             RNTrackPlayer.play();
             this.props.showPlaying(true);
@@ -145,6 +181,7 @@ class MusicPlayScreen extends React.Component<Props, State>{
         }
     };
     public pauseSong = () => {
+        this.showAd();
         if (this.state.isSong) {
             this.timer && clearInterval(this.timer);
             RNTrackPlayer.pause();
@@ -155,6 +192,7 @@ class MusicPlayScreen extends React.Component<Props, State>{
 
     }
     public playNextSong = async (isAuto: boolean) => {
+        this.showAd();
         if (this.state.isSong) {
             const skip = await RNTrackPlayer.skipToNext();
             this.props.showPlaying(true);
@@ -169,6 +207,7 @@ class MusicPlayScreen extends React.Component<Props, State>{
         // })
     }
     public playPreviousSong = async () => {
+        this.showAd();
         if (this.state.isSong) {
             const skip = await RNTrackPlayer.skipToPrevious()
             this.props.showPlaying(true);
@@ -244,7 +283,7 @@ class MusicPlayScreen extends React.Component<Props, State>{
         const url = "hiphopStreets://settings"
         Share.open({
             url: path, message: `Hey, check out this song on Hiphop Streets!
-${url}`
+${shareUrl}`
         })
     }
     downloadFile = (uri: any, path: any, shareUrl: any) => {
@@ -252,8 +291,6 @@ ${url}`
         RNFS.downloadFile({ fromUrl: uri, toFile: path, }).promise
             .then((res: any) => this.shareFile(path, shareUrl));
     }
-
-
     public onBuffer = () => {
         // console.log("buffering video")
     }
@@ -280,7 +317,6 @@ ${url}`
         this.props.setSong();
     }
     public render() {
-        // console.log("render ");
         return (
             <Container style={styles.container}>
                 <CommonHeader title={"Play Music"}
@@ -288,6 +324,7 @@ ${url}`
                         <TouchableOpacity
                             style={{ marginTop: 10, paddingRight: 5, justifyContent: 'center', alignItems: 'center' }}
                             onPress={() => {
+                                this.showAd()
                                 this.props.navigation.goBack();
                                 if (!this.state.isSong) {
                                     this.removePauseVideo();
@@ -299,7 +336,6 @@ ${url}`
                     } />
 
                 <ScrollView style={styles.holderView}>
-
                     {this.state.isSong && <Image style={styles.image} source={{ uri: this.props.currentSong.songimage }}></Image>}
                     {!this.state.isSong &&
                         // <View style={styles.video}>
@@ -468,7 +504,6 @@ ${url}`
 
                 </ScrollView>
                 {/* <TrackPlayer/> */}
-
             </Container>
         )
     }

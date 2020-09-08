@@ -192,7 +192,7 @@ class PlaylistScreen extends React.Component<Props, State>{
 
         firebase.links()
             .createDynamicLink(link).then((link) => {
-                console.log("Link==========>>>>>>>>.", link)
+                // console.log("Link==========>>>>>>>>.", link)
                 // console.log(link)
                 const name = shorthash.unique(item.songimage);
                 const extension = (Platform.OS === 'android') ? 'file://' : ''

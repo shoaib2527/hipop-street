@@ -41,15 +41,6 @@ import { transformSongArray } from '../../Lib/SongQueueHelper';
 import { UserRole } from '../SignupScreen/SignupScreen';
 import Banner from '../../Components/BannerAd/Banner.component'
 
-import firebase from 'react-native-firebase';
-const advert = firebase.admob().interstitial('ca-app-pub-3940256099942544/1033173712');
-const AdRequest = firebase.admob.AdRequest;
-const request = new AdRequest();
-request.addKeyword('foo');
-advert.loadAd(request.build());
-advert.on('onAdLoaded', () => {
-  console.log('Advert ready to show.');
-});
 
 
 export interface State {
@@ -110,13 +101,6 @@ class HomeScreen extends React.Component<Props, State> {
     this.props.setBottomTab(BottomBarBtns.EXPLORE);
     this.props.getCategories();
     this.props.getHomeData();
-    setTimeout(() => {
-      if (advert.isLoaded()) {
-        advert.show();
-      } else {
-        // Unable to show interstitial - not loaded yet.
-      }
-    }, 5000);
     console.warn("==========================================================")
     Linking.addEventListener('url', this.handleOpenURL)
   }
@@ -337,7 +321,7 @@ class HomeScreen extends React.Component<Props, State> {
         <CommonHeader
           style={{ height: 1 }}
         />
-        <Banner />
+        {/* <Banner /> */}
         <View
           style={{
             justifyContent: 'center',

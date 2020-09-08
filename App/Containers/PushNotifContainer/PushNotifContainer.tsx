@@ -44,7 +44,7 @@ export default class PushNotifContainer extends Component {
     } else {
     }
     firebase.notifications().onNotification((notification) => {
-      console.log(notification)
+      // console.log(notification)
       firebase.notifications().displayNotification(notification)
     })
     firebase.messaging().onMessage((Hello) => {
