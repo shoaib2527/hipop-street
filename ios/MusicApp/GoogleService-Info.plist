@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>591629993468-cq5285a83jvikqefnjpq36jlngfps03a.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.591629993468-cq5285a83jvikqefnjpq36jlngfps03a</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>591629993468-2rufvrn5p460fctdoj803hlfmtee5akd.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBaF3zQz_0CDQO-D_P6_5GfNq1-02ptqtk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>591629993468</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hhs.hiphopstreets</string>
+	<key>PROJECT_ID</key>
+	<string>hip-hop-streets</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hip-hop-streets.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:591629993468:ios:e878c96720831266891e79</string>
+	<key>DATABASE_URL</key>
+	<string>https://hip-hop-streets.firebaseio.com</string>
+</dict>
+</plist>

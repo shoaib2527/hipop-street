@@ -1,0 +1,16 @@
+{
+  "createdWith": "3.4.0",
+  "examples": "classic",
+  "navigation": "react-navigation",
+  "askToOverride": true,
+  "generators": {
+    "component": "ignite-typescript-boilerplate",
+    "container": "ignite-typescript-boilerplate",
+    "list": "ignite-typescript-boilerplate",
+    "reducers": "ignite-typescript-boilerplate",
+    "saga": "ignite-typescript-boilerplate",
+    "screen": "ignite-typescript-boilerplate"
+  },
+  "boilerplate": "ignite-typescript-boilerplate",
+  "boilerplateVersion": "0.1.5"
+}

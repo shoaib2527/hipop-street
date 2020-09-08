@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "591629993468",
+    "firebase_url": "https://hip-hop-streets.firebaseio.com",
+    "project_id": "hip-hop-streets",
+    "storage_bucket": "hip-hop-streets.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591629993468:android:ee8520df8686b7d8891e79",
+        "android_client_info": {
+          "package_name": "com.goigi.android.hiphopstreet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591629993468-hkojukbn20k8q7lqad2eajevvrmc5naj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt_BsRsSIzRjnJgVBvN3l0lreR5R-KJx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591629993468-hkojukbn20k8q7lqad2eajevvrmc5naj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "591629993468-qb7g0um4atnj8h16bnph2s81bu4nf4i0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hhs.hiphopstreets"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
