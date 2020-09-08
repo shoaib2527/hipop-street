@@ -83,7 +83,7 @@ class ReduxNavigation extends React.Component<Props> {
     const LoginContainer = createAppContainer(LoginNavigation)
     return this.props.isLogin ?
 
-      <AppContainer />
+      <AppContainer enableURLHandling={false} />
 
       :
 
