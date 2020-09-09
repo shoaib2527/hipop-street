@@ -321,7 +321,6 @@ class HomeScreen extends React.Component<Props, State> {
         <CommonHeader
           style={{ height: 1 }}
         />
-        {/* <Banner /> */}
         <View
           style={{
             justifyContent: 'center',
@@ -472,6 +471,7 @@ class HomeScreen extends React.Component<Props, State> {
           contentContainerStyle={{ paddingBottom: 70 }}>
           {this.renderTextIcon(DataTypes.SONGS, this.props.featuredSongs)}
           {this.renderGenreList(this.props.featuredSongs, DataTypes.SONGS)}
+        <Banner />
           {this.renderTextIcon(DataTypes.ALBUMS, this.props.category)}
           {this.renderGenreList(this.props.category, DataTypes.ALBUMS)}
           {/* {this.renderTextIcon(DataTypes.VIDEOS, this.props.featuredVideos)} */}

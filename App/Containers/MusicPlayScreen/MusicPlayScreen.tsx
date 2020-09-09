@@ -103,7 +103,7 @@ class MusicPlayScreen extends React.Component<Props, State>{
 
     public showAd() {
         console.log("show ad")
-        if (this.state.minutePassed && !this.state.isSong) {
+        if (this.state.minutePassed   ) {
             this.pauseSong(false);
             setTimeout(() => {
                 this.setState({ minutePassed: true })
@@ -133,7 +133,6 @@ class MusicPlayScreen extends React.Component<Props, State>{
         setTimeout(() => {
             this.setState({ minutePassed: true })
         }, 60000);
-        if (!this.state.isSong) {
             setTimeout(() => {
                 if (advert.isLoaded()) {
                     advert.show();
@@ -143,10 +142,9 @@ class MusicPlayScreen extends React.Component<Props, State>{
                     console.log("Unable to show interstitial - not loaded yet.")
                 }
             }, 3000);
-        }
         this.backListener = BackHandler.addEventListener("hardwareBackPress",
             () => {
-                if (this.state.minutePassed && !this.state.isSong)
+                if (this.state.minutePassed  )
                     this.showAd()
                 else
                     this.props.navigation.goBack()
@@ -343,7 +341,7 @@ ${shareUrl}`
                         <TouchableOpacity
                             style={{ marginTop: 10, paddingRight: 5, justifyContent: 'center', alignItems: 'center' }}
                             onPress={() => {
-                                if (this.state.minutePassed && !this.state.isSong)
+                                if (this.state.minutePassed)
                                     this.showAd()
                                 else {
                                     this.props.navigation.goBack();
@@ -400,7 +398,7 @@ ${shareUrl}`
                         style={{ color: colors.charcoal, fontFamily: "serif", alignSelf: "center", marginTop: 10, }}> */}
                     <Text
                         onPress={() => {
-                            if (this.state.minutePassed && !this.state.isSong)
+                            if (this.state.minutePassed )
                                 this.showAd()
                             else
                                 this.openArtistProfile(this.props.currentSong.userId)
@@ -487,7 +485,7 @@ ${shareUrl}`
                             padding: 2, flex: 0.5, flexDirection: "row", borderWidth: 0.5, borderRadius: 5,
                             justifyContent: "center", borderColor: colors.lightMaroon
                         }} onPress={() => {
-                            if (this.state.minutePassed && !this.state.isSong)
+                            if (this.state.minutePassed)
                                 this.showAd()
                             else {
                                 this.props.makeFavorite(this.props.currentSong.songid)
@@ -509,7 +507,7 @@ ${shareUrl}`
                                 justifyContent: "center", marginLeft: 5, borderColor: colors.lightMaroon, marginTop: 1,
                             }}
                             onPress={() => {
-                                if (this.state.minutePassed && !this.state.isSong)
+                                if (this.state.minutePassed)
                                     this.showAd()
                                 else {
                                     this.copyToClipboard(this.props.currentSong)
@@ -528,7 +526,7 @@ ${shareUrl}`
                             padding: 2, flex: 0.5, flexDirection: "row", borderWidth: 0.5, borderRadius: 5,
                             justifyContent: "center", borderColor: colors.lightMaroon,
                         }} onPress={() => {
-                            if (this.state.minutePassed && !this.state.isSong) {
+                            if (this.state.minutePassed) {
                                 this.showAd()
                             }
                             else {

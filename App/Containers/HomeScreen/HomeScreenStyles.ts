@@ -76,8 +76,8 @@ export default StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold",
         color: colors.charcoal,
-        marginTop: 20,
-        marginBottom: 20,
+        marginTop: 10,
+        marginBottom: 10,
         // marginTop: 40,
         // fontFamily: "serif"
     },
