@@ -32,6 +32,7 @@ const advert = firebase.admob().interstitial(Platform.OS == 'ios' ?
 const AdRequest = firebase.admob.AdRequest;
 var request = new AdRequest();
 request.addKeyword('foo');
+advert.loadAd(request.build());
 export enum OpenSong {
     SCREEN = "From Screen",
     COMPONENT = "From Component",
@@ -102,7 +103,8 @@ class MusicPlayScreen extends React.Component<Props, State>{
 
     public showAd() {
         console.log("show ad")
-        if (this.state.minutePassed) {
+        if (this.state.minutePassed && !this.state.isSong) {
+            this.pauseSong(false);
             setTimeout(() => {
                 this.setState({ minutePassed: true })
             }, 60000);
@@ -131,8 +133,24 @@ class MusicPlayScreen extends React.Component<Props, State>{
         setTimeout(() => {
             this.setState({ minutePassed: true })
         }, 60000);
+        if (!this.state.isSong) {
+            setTimeout(() => {
+                if (advert.isLoaded()) {
+                    advert.show();
+                    console.log("Ad shown")
+                } else {
+                    advert.loadAd(request.build())
+                    console.log("Unable to show interstitial - not loaded yet.")
+                }
+            }, 3000);
+        }
         this.backListener = BackHandler.addEventListener("hardwareBackPress",
-            this.showAd);
+            () => {
+                if (this.state.minutePassed && !this.state.isSong)
+                    this.showAd()
+                else
+                    this.props.navigation.goBack()
+            });
     }
     public componentWillUnmount() {
         clearInterval(this.interval);
@@ -180,8 +198,9 @@ class MusicPlayScreen extends React.Component<Props, State>{
             this.props.showPlaying(true);
         }
     };
-    public pauseSong = () => {
-        this.showAd();
+    public pauseSong = (showAdd) => {
+        if (showAdd)
+            this.showAd();
         if (this.state.isSong) {
             this.timer && clearInterval(this.timer);
             RNTrackPlayer.pause();
@@ -324,12 +343,15 @@ ${shareUrl}`
                         <TouchableOpacity
                             style={{ marginTop: 10, paddingRight: 5, justifyContent: 'center', alignItems: 'center' }}
                             onPress={() => {
-                                this.showAd()
-                                this.props.navigation.goBack();
-                                if (!this.state.isSong) {
-                                    this.removePauseVideo();
+                                if (this.state.minutePassed && !this.state.isSong)
+                                    this.showAd()
+                                else {
+                                    this.props.navigation.goBack();
+                                    if (!this.state.isSong) {
+                                        this.removePauseVideo();
+                                    }
+                                    this.timer && clearInterval(this.timer);
                                 }
-                                this.timer && clearInterval(this.timer);
                             }}>
                             <Icon name={"ios-arrow-back"} style={{ fontSize: 16, color: colors.lightMaroon, paddingVertical: 10 }}></Icon>
                         </TouchableOpacity>
@@ -367,7 +389,6 @@ ${shareUrl}`
                             }}
                         // selectedAudioTrack={{type: this.state.pauseVideo ? "disabled" : "system"}}
                         />
-
                         //  </View>
                     }
                     {/* <Text style={{ marginTop: 20, fontSize: 15, fontFamily: "serif", color: colors.black, alignSelf: "center" }}>Now Playing</Text> */}
@@ -378,7 +399,12 @@ ${shareUrl}`
                         onPress={() => this.openArtistProfile(this.props.currentSong.userid)}
                         style={{ color: colors.charcoal, fontFamily: "serif", alignSelf: "center", marginTop: 10, }}> */}
                     <Text
-                        onPress={() => this.openArtistProfile(this.props.currentSong.userId)}
+                        onPress={() => {
+                            if (this.state.minutePassed && !this.state.isSong)
+                                this.showAd()
+                            else
+                                this.openArtistProfile(this.props.currentSong.userId)
+                        }}
                         style={{ color: colors.charcoal, alignSelf: "center", marginTop: 10, }}>
                         {this.props.currentSong.artistName}</Text>
                     <View style={{ backgroundColor: colors.maroon, height: 1, alignSelf: "center", width: 80, marginTop: 5 }}></View>
@@ -399,6 +425,7 @@ ${shareUrl}`
                             maximumTrackTintColor={colors.black}
                             thumbTintColor={colors.black}
                             onValueChange={(n) => {
+                                this.showAd()
                                 if (this.state.isSong) {
                                     this.setState({
                                         currentTime: {
@@ -447,7 +474,7 @@ ${shareUrl}`
                         // bottom: this.state.layout.height, right: this.state.layout.width - 30
                     }}>
                         <Icon onPress={this.playPreviousSong} style={styles.icon} name={"stepbackward"} type={"AntDesign"} />
-                        {this.props.showPlay && <Icon onPress={this.pauseSong} style={[styles.icon, { fontSize: 40, paddingHorizontal: 30, marginTop: 0 }]} name={"ios-pause"} type={"Ionicons"} />}
+                        {this.props.showPlay && <Icon onPress={() => this.pauseSong(true)} style={[styles.icon, { fontSize: 40, paddingHorizontal: 30, marginTop: 0 }]} name={"ios-pause"} type={"Ionicons"} />}
                         {!this.props.showPlay && <Icon onPress={this.playSong} style={[styles.icon, { fontSize: 40, paddingHorizontal: 30, marginTop: 0 }]} name={"play"} type={"AntDesign"} />}
                         <Icon onPress={() => this.playNextSong(false)} style={styles.icon} name={"stepforward"} type={"AntDesign"} />
                     </View>
@@ -460,9 +487,12 @@ ${shareUrl}`
                             padding: 2, flex: 0.5, flexDirection: "row", borderWidth: 0.5, borderRadius: 5,
                             justifyContent: "center", borderColor: colors.lightMaroon
                         }} onPress={() => {
-
-                            this.props.makeFavorite(this.props.currentSong.songid)
-                            this.props.getFavorites(true)
+                            if (this.state.minutePassed && !this.state.isSong)
+                                this.showAd()
+                            else {
+                                this.props.makeFavorite(this.props.currentSong.songid)
+                                this.props.getFavorites(true)
+                            }
                         }
                         }>
                             <Text style={{ fontSize: 12 }}>{isFavorite(this.props.favorites, this.props.currentSong.songid) ?
@@ -478,7 +508,13 @@ ${shareUrl}`
                                 padding: 2, flex: 0.5, flexDirection: "row", borderWidth: 0.5, borderRadius: 5,
                                 justifyContent: "center", marginLeft: 5, borderColor: colors.lightMaroon, marginTop: 1,
                             }}
-                            onPress={() => this.copyToClipboard(this.props.currentSong)}>
+                            onPress={() => {
+                                if (this.state.minutePassed && !this.state.isSong)
+                                    this.showAd()
+                                else {
+                                    this.copyToClipboard(this.props.currentSong)
+                                }
+                            }}>
                             <Text style={{ fontSize: 12 }}>{this.state.isSong ? "Share song" : "Share video"}</Text>
                             <Icon name={"share-outline"} type={"MaterialCommunityIcons"} style={{ fontSize: 13, color: colors.charcoal, marginTop: 4 }}></Icon>
                         </TouchableOpacity>
@@ -492,8 +528,13 @@ ${shareUrl}`
                             padding: 2, flex: 0.5, flexDirection: "row", borderWidth: 0.5, borderRadius: 5,
                             justifyContent: "center", borderColor: colors.lightMaroon,
                         }} onPress={() => {
-                            !this.state.isSong && this.removePauseVideo();
-                            this.props.navigation.push("PlaylistScreen", { comingFrom: PlaylistTypes.PLAYLIST })
+                            if (this.state.minutePassed && !this.state.isSong) {
+                                this.showAd()
+                            }
+                            else {
+                                !this.state.isSong && this.removePauseVideo();
+                                this.props.navigation.push("PlaylistScreen", { comingFrom: PlaylistTypes.PLAYLIST })
+                            }
                         }}>
                             <Text style={{ fontSize: 12 }}>My playlist</Text>
                             <Icon name={"playlist"} type={"SimpleLineIcons"} style={{
