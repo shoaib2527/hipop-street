@@ -27,8 +27,8 @@ var RNFS = require('react-native-fs');
 
 // import firebase from 'react-native-firebase';
 const advert = firebase.admob().interstitial(Platform.OS == 'ios' ?
-    'ca-app-pub-3940256099942544/4411468910'
-    : 'ca-app-pub-3940256099942544/1033173712');
+    'ca-app-pub-5865232026493005/9096853759'
+    : 'ca-app-pub-5865232026493005/7806811057');
 const AdRequest = firebase.admob.AdRequest;
 var request = new AdRequest();
 request.addKeyword('foo');
