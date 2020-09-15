@@ -101,14 +101,6 @@ class HomeScreen extends React.Component<Props, State> {
     this.props.setBottomTab(BottomBarBtns.EXPLORE);
     this.props.getCategories();
     this.props.getHomeData();
-    console.warn("==========================================================")
-    Linking.addEventListener('url', this.handleOpenURL)
-  }
-  componentWillUnmount() { // C
-    Linking.removeEventListener('url', this.handleOpenURL);
-  }
-  handleOpenURL = (event) => { // D
-    console.log("Event==>", event);
   }
   public selectSingleCategory = (data: any) => {
     this.props.navigation.navigate('Playlist', {

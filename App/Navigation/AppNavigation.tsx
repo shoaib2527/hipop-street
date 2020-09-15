@@ -34,7 +34,6 @@ const playlist = createStackNavigator({
   },
 })
 
-
 // Manifest of possible screens
 const PrimaryNav = createStackNavigator({
   HomeScreen: { screen: home, },
